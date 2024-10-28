@@ -3,6 +3,7 @@ import "./globals.css";
 import Nav from "./(components)/Nav";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
+import Footer from "./(components)/Footer";
 
 config.autoAddCss = false;
 
@@ -28,10 +29,13 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div className="max-w-xl m-auto pt-3 px-5 mb-4">
+        <div className="max-w-xl m-auto pt-3 px-5 pb-4">
           <Nav />
         </div>
         <div className="max-w-xl m-auto px-5">{children}</div>
+        <div className="max-w-xl m-auto px-5 pt-4">
+          <Footer />
+        </div>
       </body>
     </html>
   );

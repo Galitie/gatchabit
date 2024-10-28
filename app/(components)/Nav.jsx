@@ -5,7 +5,7 @@ import React from "react";
 const Nav = () => {
   return (
     <nav className="flex justify-between items-center">
-      <div>
+      <div className="text-xl">
         <p>GATCHABIT</p>
       </div>
       <button className="flex gap-2 btn">
@@ -13,7 +13,7 @@ const Nav = () => {
           icon={faCoins}
           className="text-yellow-400 pt-1"
         ></FontAwesomeIcon>
-        <p>Use Tokens:</p>
+        <p>Use Tokens</p>
         <p>x10</p>
       </button>
     </nav>

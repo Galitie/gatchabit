@@ -4,9 +4,9 @@ import React from "react";
 
 const AddTaskInput = () => {
   return (
-    <div className="flex py-4">
+    <div className="flex">
       <input
-        className="shadow border-b-4 border-gray-700 appearance-none grow py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        className="shadow border-b-4 border-gray-700 appearance-none grow py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline hover:bg-slate-100"
         id="task-input"
         type="text"
         placeholder="Type in a new task"
