@@ -17,7 +17,7 @@ const AddTaskInput = () => {
           <span>
             <FontAwesomeIcon
               icon={faAdd}
-              className="text-green-600 pt-1"
+              className="text-green-400 pt-1"
             ></FontAwesomeIcon>
           </span>{" "}
           Add
