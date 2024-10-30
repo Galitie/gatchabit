@@ -1,20 +1,23 @@
 import React from "react";
 import Task from "./Task";
 
-const TaskList = () => {
-  const testTasks = [
-    "This is a task",
-    "Drink water",
-    "Go on a run",
-    "more",
-    "This is a task",
-    "Drink water",
-    "Go on a run",
-    "more",
-  ];
+const getTasks = async () => {
+  try {
+    const res = await fetch(process.env.NEXT_PUBLIC_HOST_URL + "/api/Tasks", {
+      cache: "no-store",
+    });
+
+    return res.json();
+  } catch (error) {
+    console.log("Failed to get tasks", error);
+  }
+};
+const TaskList = async () => {
+  const { tasks } = await getTasks();
+
   return (
     <div className="flex flex-col gap-2">
-      {testTasks.map((task, taskIndex) => (
+      {tasks.map((task, taskIndex) => (
         <div key={taskIndex}>
           <Task task={task} />
         </div>
