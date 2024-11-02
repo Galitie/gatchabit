@@ -23,14 +23,23 @@ const Task = ({ task }) => {
   };
 
   const completeTask = async () => {
-    console.log("Ticket completed!");
-    const res = await fetch(
+    const resTask = await fetch(
       process.env.NEXT_PUBLIC_HOST_URL + "/api/Tasks/" + task._id,
       {
         method: "DELETE",
       }
     );
-    if (res.ok) {
+    const resToken = await fetch(
+      process.env.NEXT_PUBLIC_HOST_URL + "/api/Users/",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ amount: 1 }), // Convert to integer
+      }
+    );
+    if (resTask.ok && resToken.ok) {
       router.refresh();
     }
   };

@@ -1,6 +1,7 @@
 import { faCoins } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
+import Tokens from "./Tokens";
 
 const Nav = () => {
   return (
@@ -8,14 +9,7 @@ const Nav = () => {
       <div className="text-xl">
         <p>GATCHABIT</p>
       </div>
-      <button className="flex gap-2 btn">
-        <FontAwesomeIcon
-          icon={faCoins}
-          className="text-yellow-400 pt-1"
-        ></FontAwesomeIcon>
-        <p>Use Tokens</p>
-        <p>x10</p>
-      </button>
+      <Tokens />
     </nav>
   );
 };
