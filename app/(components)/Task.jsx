@@ -36,7 +36,7 @@ const Task = ({ task }) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ amount: 1 }), // Convert to integer
+        body: JSON.stringify({ amount: 1 }),
       }
     );
     if (resTask.ok && resToken.ok) {

@@ -17,11 +17,18 @@ const TaskList = async () => {
 
   return (
     <div className="flex flex-col gap-2">
-      {tasks.map((task, taskIndex) => (
-        <div key={taskIndex}>
-          <Task task={task} />
-        </div>
-      ))}
+      {tasks.length > 0 ? (
+        tasks.map((task, taskIndex) => (
+          <div key={taskIndex}>
+            <Task task={task} />
+          </div>
+        ))
+      ) : (
+        <p className="py-10">
+          You currently have no tasks.{" "}
+          <b>Add a task above to start earning tokens!</b>
+        </p>
+      )}
     </div>
   );
 };
