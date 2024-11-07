@@ -1,37 +1,31 @@
 import React from "react";
+import GardenTile from "./GardenTile";
 
-const Garden = () => {
+const getGardenTiles = async () => {
+  try {
+    const res = await fetch(
+      process.env.NEXT_PUBLIC_HOST_URL + "/api/GardenTiles",
+      {
+        cache: "no-store",
+      }
+    );
+
+    return res.json();
+  } catch (error) {
+    console.log("Failed to get gardenTiles", error);
+  }
+};
+
+const Garden = async () => {
+  const { gardenTiles } = await getGardenTiles();
+
   return (
     <div className="grid grid-cols-5 cursor-pointer aspect-square m-auto max-w-xs min-w-full">
-      <div className="bg-gray-400 aspect-square border border-white hover:border-4 hover:border-green-300"></div>
-      <div className="bg-gray-400 aspect-square border border-white hover:border-4 hover:border-green-300"></div>
-      <div className="bg-gray-400 aspect-square border border-white hover:border-4 hover:border-green-300"></div>
-      <div className="bg-gray-400 aspect-square border border-white hover:border-4 hover:border-green-300"></div>
-      <div className="bg-gray-400 aspect-square border border-white hover:border-4 hover:border-green-300"></div>
-
-      <div className="bg-green-700 aspect-square border border-white hover:border-4 hover:border-green-300"></div>
-      <div className="bg-green-500 aspect-square border border-white hover:border-4 hover:border-green-300"></div>
-      <div className="bg-gray-400 aspect-square border border-white hover:border-4 hover:border-green-300"></div>
-      <div className="bg-gray-400 aspect-square border border-white hover:border-4 hover:border-green-300"></div>
-      <div className="bg-green-200 aspect-square border border-white hover:border-4 hover:border-green-300"></div>
-
-      <div className="bg-green-400 aspect-square border border-white hover:border-4 hover:border-green-300"></div>
-      <div className="bg-gray-400 aspect-square border border-white hover:border-4 hover:border-green-300"></div>
-      <div className="bg-gray-400 aspect-square border border-white hover:border-4 hover:border-green-300"></div>
-      <div className="bg-gray-400 aspect-square border border-white hover:border-4 hover:border-green-300"></div>
-      <div className="bg-gray-400 aspect-square border border-white hover:border-4 hover:border-green-300"></div>
-
-      <div className="bg-gray-400 aspect-square border border-white hover:border-4 hover:border-green-300"></div>
-      <div className="bg-green-700 aspect-square border border-white hover:border-4 hover:border-green-300"></div>
-      <div className="bg-gray-400 aspect-square border border-white hover:border-4 hover:border-green-300"></div>
-      <div className="bg-gray-400 aspect-square border border-white hover:border-4 hover:border-green-300"></div>
-      <div className="bg-green-200 aspect-square border border-white hover:border-4 hover:border-green-300"></div>
-
-      <div className="bg-green-700 aspect-square border border-white hover:border-4 hover:border-green-300"></div>
-      <div className="bg-green-500 aspect-square border border-white hover:border-4 hover:border-green-300"></div>
-      <div className="bg-gray-400 aspect-square border border-white hover:border-4 hover:border-green-300"></div>
-      <div className="bg-gray-400 aspect-square border border-white hover:border-4 hover:border-green-300"></div>
-      <div className="bg-green-600 aspect-square border border-white hover:border-4 hover:border-green-300"></div>
+      {gardenTiles.map((gardenTile, gardenTileIndex) => (
+        <div key={gardenTileIndex}>
+          <GardenTile info={gardenTile} />
+        </div>
+      ))}
     </div>
   );
 };

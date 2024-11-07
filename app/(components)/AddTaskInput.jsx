@@ -37,7 +37,6 @@ const AddTaskInput = () => {
         id="task-input"
         type="text"
         placeholder="Type in a new task"
-        maxLength={20}
         onChange={handleChange}
         required={true}
         name="title"

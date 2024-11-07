@@ -48,7 +48,7 @@ const Task = ({ task }) => {
     <div className="flex items-center justify-between bg-slate-300 rounded-sm px-4 py-2">
       <div className="flex justify-start gap-6 items-center">
         <FontAwesomeIcon icon={faEllipsisV} />
-        <p>{task.title}</p>
+        <p className="pr-3">{task.title}</p>
       </div>
       <div className="flex gap-6">
         <button className="flex items-center" onClick={deleteTask}>

@@ -1,5 +1,3 @@
-import AddTaskOptions from "./(components)/AddTaskOptions";
-import AddTaskInput from "./(components)/AddTaskInput";
 import Garden from "./(components)/Garden";
 import TaskList from "./(components)/TaskList";
 import TaskForm from "./(components)/TaskForm";
