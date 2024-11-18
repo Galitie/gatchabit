@@ -1,50 +1,34 @@
 "use client";
-import React from "react";
 import { faCoins } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter, usePathname } from "next/navigation";
-import { useState, useEffect } from "react";
 
-const getUser = async () => {
-  try {
-    const res = await fetch(process.env.NEXT_PUBLIC_HOST_URL + "/api/Users", {
-      cache: "no-store",
-    });
-    return res.json();
-  } catch (error) {
-    console.log("Failed to get user", error);
-  }
-};
-
-const Tokens = () => {
-  const [user, setUser] = useState(null);
+const Tokens = ({ user }) => {
   const router = useRouter();
   const pathname = usePathname();
 
-  const changePage = (e) => {
-    e.preventDefault();
-    pathname == "/gacha" ? router.push("/") : router.push("/gacha");
+  const handleNavigation = () => {
+    if (pathname === "/gacha") {
+      router.push("/"); // Navigate to homepage
+    } else {
+      router.push("/gacha"); // Navigate to /gacha
+    }
   };
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      const data = await getUser();
-      setUser(data);
-    };
-    fetchUser();
-  }, []);
-
-  if (!user) return <p>Loading...</p>;
 
   return (
     <div>
-      <button className="flex gap-2 btn" onClick={changePage}>
-        {pathname == "/gacha" ? (
-          <p>Return to Garden</p>
+      <button className="flex gap-2 btn" onClick={handleNavigation}>
+        {pathname === "/gacha" ? (
+          <p>
+            Return to Garden:{" "}
+            <FontAwesomeIcon icon={faCoins} className="text-yellow-400 pt-1" />{" "}
+            {user.tokens}
+          </p>
         ) : (
           <p>
+            Use Tokens:{" "}
             <FontAwesomeIcon icon={faCoins} className="text-yellow-400 pt-1" />{" "}
-            Use Tokens: {user.tokens}
+            {user.tokens}
           </p>
         )}
       </button>

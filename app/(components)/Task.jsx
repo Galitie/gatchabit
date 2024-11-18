@@ -18,7 +18,7 @@ const Task = ({ task }) => {
       }
     );
     if (res.ok) {
-      router.refresh();
+      router.refresh(); // Refresh server components, including Tokens in Nav
     }
   };
 
@@ -40,7 +40,7 @@ const Task = ({ task }) => {
       }
     );
     if (resTask.ok && resToken.ok) {
-      router.refresh();
+      router.refresh(); // Re-fetch Tokens component in Nav
     }
   };
 

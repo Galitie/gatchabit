@@ -1,4 +1,5 @@
 import React from "react";
+import ServerTokens from "./ServerTokens";
 import Tokens from "./Tokens";
 
 const Nav = () => {
@@ -7,7 +8,9 @@ const Nav = () => {
       <div className="text-xl">
         <p>GATCHABIT</p>
       </div>
-      <Tokens />
+      <ServerTokens>
+        <Tokens />
+      </ServerTokens>
     </nav>
   );
 };

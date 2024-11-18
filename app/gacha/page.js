@@ -1,6 +1,6 @@
 import React from "react";
 import Nav from "../(components)/Nav";
-import Gacha from "../(components)/Gacha";
+import Gacha from "../(components)/Gacha/Gacha";
 
 const GachaPage = () => {
   return (
