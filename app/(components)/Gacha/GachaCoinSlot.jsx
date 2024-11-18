@@ -1,14 +1,21 @@
 "use client";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import { faCoins, faSeedling } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const GachaCoinSlot = ({ item, user }) => {
   const router = useRouter();
   const [itemRecieved, setItemRecieved] = useState(false);
 
-  const handleClick = () => {
-    setItemRecieved(true);
-    spendToken();
+  const handleClick = (event) => {
+    const buttonName = event.target.name;
+    if (buttonName === "spendToken") {
+      setItemRecieved(true);
+      spendToken();
+    } else {
+      router.push("/");
+    }
   };
 
   const spendToken = async () => {
@@ -24,11 +31,21 @@ const GachaCoinSlot = ({ item, user }) => {
   return (
     <>
       {user.tokens > 0 ? (
-        <button className="btn" onClick={handleClick}>
-          Insert Coin
+        <button className="btn" onClick={handleClick} name="spendToken">
+          Insert Coin{" "}
+          <FontAwesomeIcon icon={faCoins} className="text-yellow-400 pt-1" /> 1
         </button>
       ) : (
-        ""
+        <>
+          <p>You have no tokens! Complete tasks to earn more tokens.</p>
+          <button className="btn" onClick={handleClick} name="return">
+            Return to Garden{" "}
+            <FontAwesomeIcon
+              icon={faSeedling}
+              className="text-green-400 pt-1"
+            />
+          </button>
+        </>
       )}
 
       {itemRecieved

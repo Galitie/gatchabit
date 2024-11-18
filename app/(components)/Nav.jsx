@@ -5,7 +5,7 @@ import Tokens from "./Tokens";
 const Nav = () => {
   return (
     <nav className="flex items-center justify-between pt-4">
-      <div className="text-xl">
+      <div className="">
         <p>GATCHABIT</p>
       </div>
       <ServerTokens>
