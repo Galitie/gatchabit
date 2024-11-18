@@ -1,4 +1,5 @@
 import User from "@/app/(models)/user";
+import Item from "@/app/(models)/item"; // Ensure the Item model is imported
 import { NextResponse } from "next/server";
 
 // Get the first user

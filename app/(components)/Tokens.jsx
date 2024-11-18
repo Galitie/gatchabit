@@ -10,10 +10,25 @@ const Tokens = ({ user }) => {
   const handleNavigation = () => {
     if (pathname === "/gacha") {
       router.push("/"); // Navigate to homepage
+      // addItemToInventory();
     } else {
       router.push("/gacha"); // Navigate to /gacha
     }
   };
+
+  // const addItemToInventory = async () => {
+  //   const res = await fetch("/api/Users/Inventory", {
+  //     method: "PUT",
+  //     body: JSON.stringify({ itemId: "673a87669c5c0dce720cfebc" }),
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //   });
+
+  //   if (!res.ok) {
+  //     throw new Error("Failed to create Item.");
+  //   }
+  // };
 
   return (
     <div>

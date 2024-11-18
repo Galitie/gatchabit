@@ -9,7 +9,6 @@ const getGardenTiles = async () => {
         cache: "no-store",
       }
     );
-
     return res.json();
   } catch (error) {
     console.log("Failed to get gardenTiles", error);

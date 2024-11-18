@@ -1,4 +1,4 @@
-import Item from "@/app/(models)/items";
+import Item from "@/app/(models)/item";
 import { NextResponse } from "next/server";
 
 // Get random item from database
