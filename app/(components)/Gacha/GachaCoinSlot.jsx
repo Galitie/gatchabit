@@ -23,8 +23,23 @@ const GachaCoinSlot = ({ item, user }) => {
       method: "PATCH",
       body: JSON.stringify({ amount: 1 }),
     });
+    addItemToInventory(item);
     if (res.ok) {
-      router.refresh(); // Refresh server components, including Tokens in Nav
+      router.refresh();
+    }
+  };
+
+  const addItemToInventory = async (item) => {
+    const res = await fetch("/api/Users/Inventory", {
+      method: "PUT",
+      body: JSON.stringify({ itemId: item[0]._id }), // item is an array of objects
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!res.ok) {
+      throw new Error("Failed to create Item.");
     }
   };
 
@@ -47,10 +62,11 @@ const GachaCoinSlot = ({ item, user }) => {
           </button>
         </>
       )}
-
+      {console.log(item)}
       {itemRecieved
         ? item.map((itemDetails, itemIndex) => (
             <div key={itemIndex}>
+              <p>{itemDetails._id}</p>
               <p>{itemDetails.title}</p>
               <p>{itemDetails.description}</p>
               <p>{itemDetails.rarity}</p>
