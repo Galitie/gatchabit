@@ -16,20 +16,6 @@ const Tokens = ({ user }) => {
     }
   };
 
-  // const addItemToInventory = async () => {
-  //   const res = await fetch("/api/Users/Inventory", {
-  //     method: "PUT",
-  //     body: JSON.stringify({ itemId: "673a87669c5c0dce720cfebc" }),
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //   });
-
-  //   if (!res.ok) {
-  //     throw new Error("Failed to create Item.");
-  //   }
-  // };
-
   return (
     <div>
       <button className="flex gap-2 btn" onClick={handleNavigation}>
