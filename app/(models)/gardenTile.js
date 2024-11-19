@@ -5,6 +5,12 @@ mongoose.Promise = global.Promise;
 const gardenTileSchema = new Schema({
   backgroundURL: String,
   middleLayerURL: String,
+  item: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Item", // Reference the Item model
+    },
+  ],
 });
 
 const GardenTile =

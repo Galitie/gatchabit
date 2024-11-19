@@ -5,7 +5,10 @@ export async function POST(req) {
   try {
     const body = await req.json();
     const taskData = body.formData;
-    await Task.create(taskData);
+
+    // Ensure taskData has a timestamp field, like `createdAt`.
+    await Task.create({ ...taskData, createdAt: new Date() });
+
     return NextResponse.json({ message: "Task created" }, { status: 201 });
   } catch (error) {
     return NextResponse.json({ message: "Error", error }, { status: 500 });
@@ -14,7 +17,9 @@ export async function POST(req) {
 
 export async function GET() {
   try {
-    const tasks = await Task.find();
+    // Fetch tasks and sort them by createdAt in descending order
+    const tasks = await Task.find().sort({ createdAt: -1 });
+
     return NextResponse.json({ tasks }, { status: 200 });
   } catch (error) {
     return NextResponse.json({ message: "Error", error }, { status: 500 });
