@@ -4,28 +4,6 @@ const GardenTile = ({ info }) => {
   //Check if gardenTile HAS an item on it
   const item = info.item[0] != undefined ? info.item[0] : null;
 
-  const addItemToTile = async (itemId, gardenTileId) => {
-    try {
-      const response = await fetch("/api/GardenTiles", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          gardenTileId: gardenTileId, // Replace with variable
-          itemId: itemId,
-        }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.error("Failed to add item:", errorData.message);
-        return;
-      }
-    } catch (error) {
-      console.error("Error adding item:", error);
-    }
-  };
   return (
     <div className="bg-gray-400 aspect-square hover:border-2 hover:border-green-300 relative">
       {/* Render bottom layer */}

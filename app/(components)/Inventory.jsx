@@ -1,8 +1,14 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import InventoryTile from "./InventoryTile";
 
 const Inventory = ({ inventory }) => {
+  const [openInventory, setOpenInventory] = useState(false);
+
+  const toggleInventory = () => {
+    setOpenInventory((prevState) => !prevState);
+  };
+
   // Create a combined array of inventory items and placeholders
   const gridItems = [
     ...inventory,
@@ -25,12 +31,24 @@ const Inventory = ({ inventory }) => {
 
   return (
     <>
-      {inventory.length > 0 ? (
-        <InventoryGrid gridItems={gridItems} />
+      {openInventory ? (
+        inventory.length > 0 ? (
+          <>
+            <button className="btn" onClick={toggleInventory}>
+              Close Inventory
+            </button>
+            <InventoryGrid gridItems={gridItems} />
+          </>
+        ) : (
+          <p>
+            You have no items in your inventory! Use your tokens to get new
+            items.
+          </p>
+        )
       ) : (
-        <p>
-          You have no items in your inventory! Use your tokens to get new items.
-        </p>
+        <button className="btn" onClick={toggleInventory}>
+          Open Inventory
+        </button>
       )}
     </>
   );
