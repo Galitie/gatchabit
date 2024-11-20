@@ -15,12 +15,12 @@ const Inventory = ({ inventory }) => {
     ...Array.from({ length: Math.max(25 - (inventory?.length || 0), 0) }), // Fill remaining slots
   ];
 
-  const InventoryGrid = ({ gridItems }) => (
+  const InventoryGrid = ({ gridItems, useData }) => (
     <div className="grid grid-cols-5 cursor-pointer aspect-square m-auto max-w-xs min-w-full">
       {gridItems.map((inventoryTile, index) => (
         <div key={index}>
           {inventoryTile ? (
-            <InventoryTile info={inventoryTile} />
+            <InventoryTile info={inventoryTile} sharedData={useData} />
           ) : (
             <div className="bg-gray-200 aspect-square relative"></div>
           )}

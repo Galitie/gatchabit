@@ -1,7 +1,15 @@
+"use client";
 import React from "react";
+import { useData } from "./DataContext";
 
 const InventoryTile = ({ info }) => {
   if (!info) return null;
+  const { setData } = useData();
+
+  const sendData = () => {
+    setData({ selectedItem: info });
+  };
+
   return (
     <>
       <div className="bg-gray-400 aspect-square hover:border-2 hover:border-green-300 relative">
@@ -12,6 +20,7 @@ const InventoryTile = ({ info }) => {
             alt="Item texture"
             width="100%"
             height="100%"
+            onClick={sendData}
           ></img>
         ) : null}
       </div>

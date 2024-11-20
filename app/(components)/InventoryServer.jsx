@@ -15,11 +15,11 @@ const getInventoryTiles = async () => {
   }
 };
 
-const InventoryServer = async () => {
+const InventoryServer = async ({ useData }) => {
   const { inventory } = await getInventoryTiles();
   return (
     <>
-      <Inventory inventory={inventory} />
+      <Inventory inventory={inventory} sharedData={useData} />
     </>
   );
 };

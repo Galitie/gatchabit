@@ -1,8 +1,76 @@
-import React from "react";
+"use client";
+import { useData } from "./DataContext";
+import { useRouter } from "next/navigation";
 
 const GardenTile = ({ info }) => {
   //Check if gardenTile HAS an item on it
   const item = info.item[0] != undefined ? info.item[0] : null;
+  const { data, setData } = useData();
+  const router = useRouter();
+
+  const sendData = () => {
+    try {
+      if (data.selectedItem && !item) {
+        addItemToTile(data.selectedItem._id, info._id);
+        setData(null);
+        router.refresh();
+      } else if (data.selectedItem && item) {
+        changeItemInTile(info._id, data.selectedItem._id);
+        setData(null);
+        router.refresh();
+      } else {
+        setData({ selectedTile: info._id, item: item });
+      }
+    } catch (error) {
+      console.log(
+        "User is selecting a garden tile before selecting an inventory item."
+      );
+    }
+  };
+
+  const changeItemInTile = async (gardenTileId, newItemId) => {
+    try {
+      const response = await fetch(
+        process.env.NEXT_PUBLIC_HOST_URL + "/api/GardenTiles",
+        {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ gardenTileId, newItemId }),
+        }
+      );
+      if (!response.ok) throw new Error("Failed to change item");
+      const data = await response.json();
+      console.log("Updated GardenTile:", data.gardenTile);
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
+
+  const addItemToTile = async (itemId, gardenTileId) => {
+    try {
+      const response = await fetch(
+        process.env.NEXT_PUBLIC_HOST_URL + "/api/GardenTiles",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            gardenTileId: gardenTileId, // Replace with variable
+            itemId: itemId,
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Failed to add item:", errorData.message);
+        return;
+      }
+    } catch (error) {
+      console.error("Error adding item:", error);
+    }
+  };
 
   return (
     <div className="bg-gray-400 aspect-square hover:border-2 hover:border-green-300 relative">
@@ -14,9 +82,13 @@ const GardenTile = ({ info }) => {
           alt="Floor texture"
           width="100%"
           height="100%"
+          onClick={sendData}
         ></img>
       ) : (
-        <div className="bg-gray-400 aspect-square hover:border-green-300 absolute"></div>
+        <div
+          onClick={sendData}
+          className="bg-gray-400 aspect-square hover:border-green-300 absolute"
+        ></div>
       )}
 
       {/* Render middle layer */}
@@ -27,6 +99,7 @@ const GardenTile = ({ info }) => {
           alt="Middle Layer"
           width="100%"
           height="100%"
+          onClick={sendData}
         ></img>
       ) : null}
 
@@ -37,6 +110,7 @@ const GardenTile = ({ info }) => {
           src={item.image}
           width="100%"
           height="100%"
+          onClick={sendData}
         ></img>
       ) : null}
     </div>
