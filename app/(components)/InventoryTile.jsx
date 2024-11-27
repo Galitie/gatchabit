@@ -3,11 +3,11 @@ import React from "react";
 import { useData } from "./DataContext";
 
 const InventoryTile = ({ info }) => {
-  if (!info) return null;
   const { setData } = useData();
 
   const sendData = () => {
     setData({ selectedItem: info });
+    console.log(info);
   };
 
   return (

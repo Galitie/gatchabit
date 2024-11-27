@@ -10,14 +10,19 @@ const GardenTile = ({ info }) => {
 
   const sendData = () => {
     try {
+      // if item is selected and garden tile doesn't have item on it already
       if (data.selectedItem && !item) {
         addItemToTile(data.selectedItem._id, info._id);
+        deleteItem(data.selectedItem._id);
         setData(null);
         router.refresh();
       } else if (data.selectedItem && item) {
+        // if item is selected and garden tile has an item on it
         changeItemInTile(info._id, data.selectedItem._id);
+        changeItemInInventory(data.selectedItem._id, item._id);
         setData(null);
         router.refresh();
+        // if item is not selected, select this tile
       } else {
         setData({ selectedTile: info._id, item: item });
       }
@@ -25,6 +30,23 @@ const GardenTile = ({ info }) => {
       console.log(
         "User is selecting a garden tile before selecting an inventory item."
       );
+    }
+  };
+
+  const deleteItem = async (itemId) => {
+    const resTask = await fetch(
+      process.env.NEXT_PUBLIC_HOST_URL + "/api/Users/Inventory",
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ itemId }),
+      }
+    );
+
+    if (resTask.ok) {
+      router.refresh();
     }
   };
 
@@ -40,7 +62,27 @@ const GardenTile = ({ info }) => {
       );
       if (!response.ok) throw new Error("Failed to change item");
       const data = await response.json();
+      if (response.ok) {
+        router.refresh();
+      }
       console.log("Updated GardenTile:", data.gardenTile);
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
+
+  const changeItemInInventory = async (oldItemId, newItemId) => {
+    try {
+      const response = await fetch(
+        process.env.NEXT_PUBLIC_HOST_URL + "/api/Users/Inventory",
+        {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ oldItemId, newItemId }),
+        }
+      );
+      if (!response.ok) throw new Error("Failed to change item");
+      const data = await response.json();
     } catch (error) {
       console.error(error.message);
     }

@@ -52,7 +52,6 @@ export async function PUT(request) {
   }
 }
 
-// Remove an item from the user's inventory
 export async function DELETE(request) {
   try {
     const { itemId } = await request.json();
@@ -69,16 +68,20 @@ export async function DELETE(request) {
       return NextResponse.json({ message: "User not found" }, { status: 404 });
     }
 
-    // Check if the item exists in the inventory
-    if (!user.inventory.includes(itemId)) {
+    // Find the index of the first occurrence of the item
+    const itemIndex = user.inventory.findIndex(
+      (id) => id.toString() === itemId
+    );
+
+    if (itemIndex === -1) {
       return NextResponse.json(
         { message: "Item not found in inventory" },
         { status: 404 }
       );
     }
 
-    // Remove the item from the inventory
-    user.inventory = user.inventory.filter((id) => id.toString() !== itemId);
+    // Remove the first occurrence of the item
+    user.inventory.splice(itemIndex, 1);
     await user.save();
 
     return NextResponse.json(
@@ -86,6 +89,69 @@ export async function DELETE(request) {
       { status: 200 }
     );
   } catch (error) {
-    return NextResponse.json({ message: "Error", error }, { status: 500 });
+    return NextResponse.json(
+      { message: "Error", error: error.message },
+      { status: 500 }
+    );
+  }
+}
+
+// Replace an item in the user's inventory
+export async function PATCH(request) {
+  try {
+    const { oldItemId, newItemId } = await request.json();
+    console.log("hello", oldItemId, newItemId);
+    // Validate input
+    if (!oldItemId || !newItemId) {
+      return NextResponse.json(
+        { message: "Both oldItemId and newItemId are required" },
+        { status: 400 }
+      );
+    }
+
+    // Validate new item exists
+    const newItem = await Item.findById(newItemId);
+    console.log(newItem, "new item?");
+    if (!newItem) {
+      return NextResponse.json(
+        { message: "New item not found" },
+        { status: 404 }
+      );
+    }
+
+    // Find the user
+    const user = await User.findOne();
+    if (!user) {
+      return NextResponse.json({ message: "User not found" }, { status: 404 });
+    }
+
+    // Find the index of the item to be replaced
+    const itemIndex = user.inventory.findIndex(
+      (id) => id.toString() === oldItemId
+    );
+
+    if (itemIndex === -1) {
+      return NextResponse.json(
+        { message: "Old item not found in inventory" },
+        { status: 404 }
+      );
+    }
+
+    // Replace the old item with the new item
+    user.inventory[itemIndex] = newItemId;
+    await user.save();
+
+    return NextResponse.json(
+      {
+        message: "Item replaced successfully",
+        inventory: user.inventory,
+      },
+      { status: 200 }
+    );
+  } catch (error) {
+    return NextResponse.json(
+      { message: "Error", error: error.message },
+      { status: 500 }
+    );
   }
 }
