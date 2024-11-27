@@ -100,7 +100,6 @@ export async function DELETE(request) {
 export async function PATCH(request) {
   try {
     const { oldItemId, newItemId } = await request.json();
-    console.log("hello", oldItemId, newItemId);
     // Validate input
     if (!oldItemId || !newItemId) {
       return NextResponse.json(
@@ -111,7 +110,6 @@ export async function PATCH(request) {
 
     // Validate new item exists
     const newItem = await Item.findById(newItemId);
-    console.log(newItem, "new item?");
     if (!newItem) {
       return NextResponse.json(
         { message: "New item not found" },

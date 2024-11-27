@@ -6,8 +6,8 @@ const InventoryTile = ({ info }) => {
   const { setData } = useData();
 
   const sendData = () => {
-    setData({ selectedItem: info });
     console.log(info);
+    setData({ selectedItem: info });
   };
 
   return (

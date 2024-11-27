@@ -28,7 +28,8 @@ const GardenTile = ({ info }) => {
       }
     } catch (error) {
       console.log(
-        "User is selecting a garden tile before selecting an inventory item."
+        "User is selecting a garden tile before selecting an inventory item.",
+        error
       );
     }
   };
